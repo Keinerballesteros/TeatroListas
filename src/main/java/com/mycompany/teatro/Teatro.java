@@ -32,10 +32,10 @@ public class Teatro {
         nuevo.setSiguiente(nuevo);
         
         if(inicio==null){
-            JOptionPane.showMessageDialog(null, "La lista esta vacia");   
+            JOptionPane.showMessageDialog(null, "Hola bienvenido, eres el primero en llegar");   
             
                inicio=nuevo;
-               inicio.setSiguiente(nuevo);
+               
         
         }else{
            Nodoscirculares temporal = inicio;
@@ -87,43 +87,115 @@ public class Teatro {
         }   
     
     
-    public void atender(){
-        Nodoscirculares temporal=inicio;
-        
-        Nodossimple nuevo = new Nodossimple();
-        
-        do{       
-              int numeroDeBoletas = Integer.parseInt(JOptionPane.showInputDialog(null, 
-                      " cliente " + temporal.getNombre() + "cuantas boletas va a comprar: (Ingrese un número por favor"
-                     ));
-              if(numeroDeBoletas<=3){
-                  nuevo.setDocumento(temporal.getDocumento());
-                  nuevo.setNombre(temporal.getNombre());
-                  nuevo.setGenero(temporal.getGenero());
-                  nuevo.setNboletas(numeroDeBoletas);
-                  
-                  if(inicioNodo==null){
-                      inicioNodo = nuevo;
-                      JOptionPane.showMessageDialog(null, "cliente atendido o atendida");
-                  }
-                  else{
-                    Nodossimple temporalSimple;
-                    temporalSimple = inicioNodo;
-                    while(temporalSimple.getSiguiente()!=null) {
-                    temporalSimple = temporalSimple.getSiguiente();
-                    temporalSimple.setSiguiente(nuevo);
-                    }
-                }
-              }
-              else{
-                  JOptionPane.showMessageDialog(null, "Señor o señora, solo puede comprar un maximo de 3 boletas");
-               }
-              
-              temporal=temporal.getSiguiente();       
-        
-        }while(temporal!=null);//Se detiene cuando volvemos al inicio
-           
+//    public int atender(int numeroBoletas){
+//        
+//        Nodoscirculares temporal=inicio;
+//        
+//        Nodossimple nuevo = new Nodossimple();
+//        int numeroDeBoletasPorCliente;
+//        if(temporal == null){
+//            JOptionPane.showMessageDialog(null, "La lista esta vacia");
+//        }
+//        do{       
+//               
+//               numeroDeBoletasPorCliente = Integer.parseInt(JOptionPane.showInputDialog(null, 
+//                      " cliente " + temporal.getNombre() + " cuantas boletas va a comprar: (Ingrese un número por favor)"
+//                     ));
+//              if(numeroDeBoletasPorCliente<=3 ){
+//                  if(numeroDeBoletasPorCliente <= numeroBoletas){
+//                  nuevo.setDocumento(temporal.getDocumento());
+//                  nuevo.setNombre(temporal.getNombre());
+//                  nuevo.setGenero(temporal.getGenero());
+//                  nuevo.setNboletas(numeroDeBoletasPorCliente);
+//                  
+//                  if(inicioNodo==null){
+//                      inicioNodo = nuevo;
+//                  }
+//                  else{
+//                    Nodossimple temporalSimple;
+//                    temporalSimple = inicioNodo;
+//                    while(temporalSimple.getSiguiente()!=null) {
+//                        temporalSimple = temporalSimple.getSiguiente();
+//                    }
+//                    temporalSimple.setSiguiente(nuevo);
+//                    nuevo.setSiguiente(null);
+//                    }
+//                  JOptionPane.showMessageDialog(null, "cliente atendido o atendida");
+//                 }
+//                  else{
+//                      JOptionPane.showMessageDialog(null, "Las boletas se agotaron");
+//                  }
+//                  
+//              }
+//              else{
+//                  JOptionPane.showMessageDialog(null, "Señor o señora, solo puede comprar un maximo de 3 boletas");
+//               }
+//              temporal=temporal.getSiguiente();       
+//        
+//        }while(temporal!=inicio);//Se detiene cuando volvemos al inicio
+//           return numeroDeBoletasPorCliente;
+//    }
+//    
+    public int atender(int numeroBoletas) {
+    Nodoscirculares temporal = inicio;
+
+    if (temporal == null) {
+        JOptionPane.showMessageDialog(null, "La lista está vacía");
+        return 0; // No hay clientes para atender
     }
+
+    int totalBoletasAtendidas = 0;
+
+    do {
+        // Crear un nuevo nodo para cada cliente
+        Nodossimple nuevo = new Nodossimple();
+        int numeroDeBoletasPorCliente;
+
+        try {
+            numeroDeBoletasPorCliente = Integer.parseInt(JOptionPane.showInputDialog(null,
+                    "Cliente " + temporal.getNombre() + ", ¿cuántas boletas va a comprar? (Ingrese un número por favor)"));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Entrada inválida. Debe ingresar un número.");
+            continue; // Vuelve a preguntar
+        }
+
+        if (numeroDeBoletasPorCliente <= 3) {
+            if (numeroDeBoletasPorCliente <= numeroBoletas) {
+                nuevo.setDocumento(temporal.getDocumento());
+                nuevo.setNombre(temporal.getNombre());
+                nuevo.setGenero(temporal.getGenero());
+                nuevo.setNboletas(numeroDeBoletasPorCliente);
+
+                // Actualiza el número de boletas disponibles
+                numeroBoletas -= numeroDeBoletasPorCliente;
+                totalBoletasAtendidas += numeroDeBoletasPorCliente;
+
+                if (inicioNodo == null) {
+                    inicioNodo = nuevo;
+                    nuevo.setSiguiente(null); // Opcional si es el único nodo
+                } else {
+                    Nodossimple temporalSimple = inicioNodo;
+                    while (temporalSimple.getSiguiente() != null) {
+                        temporalSimple = temporalSimple.getSiguiente();
+                    }
+                    temporalSimple.setSiguiente(nuevo);
+                    nuevo.setSiguiente(null); // Opcional
+                }
+                JOptionPane.showMessageDialog(null, "Cliente atendido o atendida");
+            } else {
+                JOptionPane.showMessageDialog(null, "Las boletas se agotaron");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Señor o señora, solo puede comprar un máximo de 3 boletas");
+        }
+
+        temporal = temporal.getSiguiente();
+    } while (temporal != inicio); // Se detiene cuando volvemos al inicio
+
+    return totalBoletasAtendidas; // Retorna el total de boletas atendidas
+}
+
+    
     
     public void imprimirListaDeBoletas(){
         Nodossimple temporal = inicioNodo;
