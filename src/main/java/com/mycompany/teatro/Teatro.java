@@ -35,15 +35,17 @@ public class Teatro {
             JOptionPane.showMessageDialog(null, "La lista esta vacia");   
             
                inicio=nuevo;
+               inicio.setSiguiente(nuevo);
         
         }else{
-            
-          nuevo.setSiguiente(inicio);
-          
-          inicio.setSiguiente(nuevo);
-          
-          inicio=nuevo;     
-        
+           Nodoscirculares temporal = inicio;
+           
+           while(temporal.getSiguiente()!=inicio){
+               temporal = temporal.getSiguiente();
+           }
+           // Enlazar el nuevo nodo al final
+           temporal.setSiguiente(nuevo);
+           nuevo.setSiguiente(inicio);
         }
         
         
@@ -87,7 +89,7 @@ public class Teatro {
     
     public void atender(){
         Nodoscirculares temporal=inicio;
-       temporal = temporal.getSiguiente(); //Debemos comenzar desde el siguiente nodo despues del inicio, para iterar desde atras hacia delante
+        
         Nodossimple nuevo = new Nodossimple();
         
         do{       
@@ -119,7 +121,7 @@ public class Teatro {
               
               temporal=temporal.getSiguiente();       
         
-        }while(temporal!=inicio.getSiguiente());//Se detiene cuando volvemos al inicio
+        }while(temporal!=null);//Se detiene cuando volvemos al inicio
            
     }
     
