@@ -84,10 +84,48 @@ public class Teatro {
         
         }   
     
+    // recorre la lista circular desde atras hacia delante, pero tiene un error cuando llega al ultimo nodo
+//    public void atender(){
+//        Nodoscirculares temporal=inicio;
+//       temporal = temporal.getSiguiente(); //Debemos comenzar desde el siguiente nodo despues del inicio, para iterar desde atras hacia delante
+//        Nodossimple nuevo = new Nodossimple();
+//        
+//        do{       
+//              int numeroDeBoletas = Integer.parseInt(JOptionPane.showInputDialog(null, 
+//                      " cliente " + temporal.getNombre() + "cuantas boletas va a comprar: (Ingrese un número por favor"
+//                     ));
+//              if(numeroDeBoletas<=3){
+//                  nuevo.setDocumento(temporal.getDocumento());
+//                  nuevo.setNombre(temporal.getNombre());
+//                  nuevo.setGenero(temporal.getGenero());
+//                  nuevo.setNboletas(numeroDeBoletas);
+//                  
+//                  if(inicioNodo==null){
+//                      inicioNodo = nuevo;
+//                      JOptionPane.showMessageDialog(null, "cliente atendido o atendida");
+//                  }
+//                  else{
+//                    Nodossimple temporalSimple;
+//                    temporalSimple = inicioNodo;
+//                    while(temporalSimple.getSiguiente()!=null) {
+//                    temporalSimple = temporalSimple.getSiguiente();
+//                    temporalSimple.setSiguiente(nuevo);
+//                    }
+//                }
+//              }
+//              else{
+//                  JOptionPane.showMessageDialog(null, "Señor o señora, solo puede comprar un maximo de 3 boletas");
+//               }
+//              
+//              temporal=temporal.getSiguiente();       
+//        
+//        }while(temporal!=inicio.getSiguiente());//Se detiene cuando volvemos al inicio
+//           
+//    }
     
     public void atender(){
         Nodoscirculares temporal=inicio;
-       temporal = temporal.getSiguiente(); //Debemos comenzar desde el siguiente nodo despues del inicio, para iterar desde atras hacia delante
+       
         Nodossimple nuevo = new Nodossimple();
         
         do{       
@@ -119,10 +157,9 @@ public class Teatro {
               
               temporal=temporal.getSiguiente();       
         
-        }while(temporal!=inicio.getSiguiente());//Se detiene cuando volvemos al inicio
+        }while(temporal!=inicio);
            
     }
-    
     public void imprimirListaDeBoletas(){
         Nodossimple temporal = inicioNodo;
         int totalDeBoletas=0;
