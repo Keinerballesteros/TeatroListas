@@ -154,24 +154,18 @@ objlista.solicitarTurno(JOptionPane.showInputDialog(" Nombre "), JOptionPane.sho
       
        numeroboletas= Integer.parseInt(JOptionPane.showInputDialog(" Diga el numero de boletas a vender "));
         
-        
-        
     }//GEN-LAST:event_numeroActionPerformed
 
     private void atenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atenderActionPerformed
-       
-        int contador = 0;
-        if(contador<numeroboletas){
-            objlista.atender();
-            contador++;
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Las boletas se agotaron");
-        }
-        
-        
-        
-        
+       int numeroDeBoletasPorCliente;
+       numeroDeBoletasPorCliente = objlista.atender(numeroboletas);
+      numeroboletas -= numeroDeBoletasPorCliente;
+      if(numeroDeBoletasPorCliente == 0){
+          JOptionPane.showMessageDialog(null, "Debe pedir al menos una boleta");
+      }
+      else if(numeroboletas <= 0){
+           JOptionPane.showMessageDialog(null, "Las boletas se agotaron");
+      }
     }//GEN-LAST:event_atenderActionPerformed
 
     private void BoletasVendidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoletasVendidasActionPerformed
